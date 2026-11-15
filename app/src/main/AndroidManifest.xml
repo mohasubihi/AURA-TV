@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-feature android:name="android.software.leanback" android:required="true" />
     <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
     <queries>
@@ -16,7 +17,7 @@
         <package android:name="com.netflix.ninja" />
     </queries>
     <application
-        android:label="AURA TV 5"
+        android:label="AURA FLOW"
         android:allowBackup="false"
         android:usesCleartextTraffic="false"
         android:icon="@drawable/tv_banner"
@@ -24,7 +25,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AuraTV">
         <activity
-            android:name="com.auratv.launcher.AuraV5Activity"
+            android:name="com.auratv.launcher.AuraFlowActivity"
             android:exported="true"
             android:configChanges="uiMode|screenSize|orientation">
             <intent-filter>
