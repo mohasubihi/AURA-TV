@@ -6,7 +6,7 @@ data class VideoItem(
     val channel: String,
     val published: String
 ) {
-    val thumbnail: String get() = "https://i.ytimg.com/vi/$id/hqdefault.jpg"
+    val thumbnail: String get() = "https://i.ytimg.com/vi/$id/maxresdefault.jpg"
     val url: String get() = "https://www.youtube.com/watch?v=$id"
 }
 
