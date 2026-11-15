@@ -241,7 +241,7 @@ class AuraV4Activity : Activity() {
             scaleType = ImageView.ScaleType.CENTER_CROP
             setBackgroundColor(0xFF17212D.toInt())
         }
-        hero.addView(featureCover, FrameLayout.LayoutParams(-1, -1))
+        put(hero, featureCover, 410, 0, 612, 300)
         hero.addView(View(this).apply {
             background = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, intArrayOf(
                 0xFA090D15.toInt(), 0xE60B111D.toInt(), 0xA50B111C.toInt(), 0x210B111C
@@ -326,10 +326,16 @@ class AuraV4Activity : Activity() {
                 scaleType = ImageView.ScaleType.CENTER_CROP
                 setBackgroundColor(0xFF151B24.toInt())
             }
-            put(block, image, 0, 0, 400, 167)
+            put(block, image, 0, 0, 400, 222)
             pictures.load(image, item.thumbnail)
+            put(block, View(this).apply {
+                background = GradientDrawable(
+                    GradientDrawable.Orientation.TOP_BOTTOM,
+                    intArrayOf(0x0005080C, 0x3305080C, 0xEA05080C.toInt())
+                )
+            }, 0, 122, 400, 100)
             val title = label(item.title, 20, Color.WHITE, true).apply { maxLines = 2 }
-            put(block, title, 17, 168, 367, 50)
+            put(block, title, 17, 170, 367, 47)
             interactive(block) { openVideo(item) }
             block.contentDescription = item.title
         }
