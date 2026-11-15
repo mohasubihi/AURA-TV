@@ -8,12 +8,11 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        // New ID intentionally allows side-by-side testing with AURA TV 2.0.
-        applicationId = "com.auratv.studio"
+        applicationId = "com.auratv.lounge"
         minSdk = 26
         targetSdk = 34
-        versionCode = 3
-        versionName = "3.0-beta"
+        versionCode = 4
+        versionName = "4.0-alpha"
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
