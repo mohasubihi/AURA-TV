@@ -281,10 +281,10 @@ class AuraV4Activity : Activity() {
     }
 
     private fun nav() {
-        val items = listOf(
-            Triple(R.drawable.ic_wifi, "الشبكة", { try { startActivity(Intent(Settings.ACTION_WIFI_SETTINGS)) } catch (_: Exception) { openDeviceSettings() } }),
-            Triple(R.drawable.ic_home, "الرئيسية", { firstFocusable.requestFocus() }),
-            Triple(R.drawable.ic_settings, "الإعدادات", { showSettings() })
+        val items: List<Triple<Int, String, () -> Unit>> = listOf(
+            Triple(R.drawable.ic_wifi, "الشبكة", { try { startActivity(Intent(Settings.ACTION_WIFI_SETTINGS)) } catch (_: Exception) { openDeviceSettings() }; Unit }),
+            Triple(R.drawable.ic_home, "الرئيسية", { firstFocusable.requestFocus(); Unit }),
+            Triple(R.drawable.ic_settings, "الإعدادات", { showSettings(); Unit })
         )
         for ((index, entry) in items.withIndex()) {
             val tile = frame(48, 434 + index * 91, 74, 73, 0xB5101720.toInt())
