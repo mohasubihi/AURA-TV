@@ -8,11 +8,11 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.auratv.lounge.v5"
+        applicationId = "com.auratv.flow"
         minSdk = 26
         targetSdk = 34
-        versionCode = 5
-        versionName = "5.0-preview"
+        versionCode = 6
+        versionName = "6.0-flow"
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
