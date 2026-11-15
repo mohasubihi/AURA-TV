@@ -391,7 +391,7 @@ class AuraV4Activity : Activity() {
         sorted.forEachIndexed { index, (pack, entry) ->
             val tile = FrameLayout(this).apply {
                 layoutDirection = View.LAYOUT_DIRECTION_LTR
-                background = rounded(0x101FFFFFF, 16)
+                background = rounded(0x10FFFFFF, 16)
                 contentDescription = entry.loadLabel(pm).toString()
             }
             put(dock, tile, dockMargin + index * (tileWidth + tileGap), 0, tileWidth, 62)
