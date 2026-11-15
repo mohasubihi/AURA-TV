@@ -352,6 +352,10 @@ class AuraV4Activity : Activity() {
         pictures.load(featureCover, item.thumbnail)
     }
 
+    /**
+     * Minimal, centered TV dock: genuine installed-app icons only.
+     * The app's name remains available via contentDescription, not as visible text.
+     */
     private fun renderApps() {
         appsContainer.removeAllViews()
         val pm = packageManager
@@ -360,34 +364,56 @@ class AuraV4Activity : Activity() {
             @Suppress("DEPRECATION")
             for (entry in pm.queryIntentActivities(Intent(Intent.ACTION_MAIN).addCategory(category), 0)) {
                 val pack = entry.activityInfo?.packageName ?: continue
-                if (pack != packageName) results[pack] = entry
+                if (pack != packageName) results.putIfAbsent(pack, entry)
             }
         }
-        val first = listOf("youtube", "netflix", "shahid", "primevideo", "disney", "spotify", "apple")
+
+        val preferred = listOf("youtube", "netflix", "shahid", "primevideo", "disney", "spotify", "apple")
         val sorted = results.entries.sortedWith(compareBy<Map.Entry<String, android.content.pm.ResolveInfo>> {
-            val p = it.key.lowercase(Locale.US)
-            first.indexOfFirst { word -> p.contains(word) }.let { order -> if (order < 0) 100 else order }
-        }.thenBy { it.value.loadLabel(pm).toString() })
-        var x = 0
-        sorted.take(7).forEach { (pack, entry) ->
+            val pack = it.key.lowercase(Locale.US)
+            preferred.indexOfFirst { token -> pack.contains(token) }.let { if (it < 0) 100 else it }
+        }.thenBy { it.value.loadLabel(pm).toString() }).take(9)
+
+        val tileWidth = 66
+        val tileGap = 16
+        val dockMargin = 18
+        val dockWidth = dockMargin * 2 + (sorted.size + 1) * tileWidth + sorted.size * tileGap
+        val dockStart = (1675 - dockWidth) / 2
+
+        val dock = FrameLayout(this).apply {
+            layoutDirection = View.LAYOUT_DIRECTION_LTR
+            background = rounded(0xD20C121A.toInt(), 22, 0x26FFFFFF, 1)
+            clipChildren = false
+            clipToPadding = false
+        }
+        put(appsContainer, dock, dockStart, 0, dockWidth, 62)
+
+        sorted.forEachIndexed { index, (pack, entry) ->
             val tile = FrameLayout(this).apply {
-                background = rounded(0xE019202A.toInt(), 15, 0x2BFFFFFF, 1)
+                layoutDirection = View.LAYOUT_DIRECTION_LTR
+                background = rounded(0x101FFFFFF, 16)
+                contentDescription = entry.loadLabel(pm).toString()
             }
-            put(appsContainer, tile, x, 0, 201, 62)
+            put(dock, tile, dockMargin + index * (tileWidth + tileGap), 0, tileWidth, 62)
             val icon = ImageView(this).apply {
                 scaleType = ImageView.ScaleType.FIT_CENTER
                 try { setImageDrawable(entry.loadIcon(pm)) } catch (_: Exception) { }
             }
-            put(tile, icon, 13, 11, 40, 40)
-            val title = label(entry.loadLabel(pm).toString(), 20, Color.WHITE, true)
-            title.maxLines = 1
-            put(tile, title, 62, 5, 132, 51)
+            put(tile, icon, 9, 8, 48, 46)
             interactive(tile) { openApp(pack) }
-            x += 216
         }
-        val other = FrameLayout(this).apply { background = rounded(0xE019202A.toInt(), 15, 0x2BFFFFFF, 1) }
-        put(appsContainer, other, x.coerceAtMost(1530), 0, 145, 62)
-        put(other, label("التطبيقات  +", 19, Color.WHITE, true, Gravity.CENTER), 0, 0, 145, 62)
+
+        val other = FrameLayout(this).apply {
+            layoutDirection = View.LAYOUT_DIRECTION_LTR
+            background = rounded(0x12FFFFFF, 16)
+            contentDescription = "كل التطبيقات"
+        }
+        put(dock, other, dockMargin + sorted.size * (tileWidth + tileGap), 0, tileWidth, 62)
+        val moreIcon = ImageView(this).apply {
+            setImageResource(R.drawable.ic_apps)
+            scaleType = ImageView.ScaleType.FIT_CENTER
+        }
+        put(other, moreIcon, 17, 15, 32, 32)
         interactive(other) { showAllApps() }
     }
 
