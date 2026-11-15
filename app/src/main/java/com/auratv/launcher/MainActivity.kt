@@ -167,7 +167,7 @@ class MainActivity : Activity() {
             isHorizontalScrollBarEnabled = false
             clipChildren = false
             clipToPadding = false
-            fillViewport = true
+            setFillViewport(true)
         }
         videoRow = AuraStyle.row(this).apply { clipChildren = false; setPadding(dp(3), dp(3), dp(3), dp(3)) }
         videoScroll.addView(videoRow, ViewGroup.LayoutParams(-2, -1))
@@ -177,7 +177,7 @@ class MainActivity : Activity() {
         content.addView(appTitle, LinearLayout.LayoutParams(-1, dp((available * .05f).toInt())))
         val appScroll = HorizontalScrollView(this).apply {
             isHorizontalScrollBarEnabled = false
-            fillViewport = true
+            setFillViewport(true)
             clipChildren = false
             clipToPadding = false
         }
