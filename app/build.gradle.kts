@@ -8,11 +8,11 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.auratv.flow"
+        applicationId = "com.auratv.nova"
         minSdk = 26
         targetSdk = 34
-        versionCode = 6
-        versionName = "6.0-flow"
+        versionCode = 7
+        versionName = "7.0-nova"
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
