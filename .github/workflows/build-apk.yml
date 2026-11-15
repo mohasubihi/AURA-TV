@@ -1,4 +1,4 @@
-name: Build AURA FLOW APK
+name: Build AURA NOVA APK
 
 on:
   workflow_dispatch:
@@ -33,6 +33,6 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: AURA-FLOW-APK
+          name: AURA-NOVA-APK
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
