@@ -8,11 +8,11 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.auratv.nova"
+        applicationId = "com.auratv.cinema"
         minSdk = 26
         targetSdk = 34
-        versionCode = 7
-        versionName = "7.0-nova"
+        versionCode = 8
+        versionName = "8.0-cinema"
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17

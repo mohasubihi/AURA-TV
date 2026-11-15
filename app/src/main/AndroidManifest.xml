@@ -17,7 +17,7 @@
         <package android:name="com.netflix.ninja" />
     </queries>
     <application
-        android:label="AURA NOVA"
+        android:label="AURA CINEMA"
         android:allowBackup="false"
         android:usesCleartextTraffic="false"
         android:icon="@drawable/tv_banner"

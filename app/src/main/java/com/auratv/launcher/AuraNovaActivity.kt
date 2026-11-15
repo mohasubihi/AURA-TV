@@ -75,6 +75,7 @@ class AuraNovaActivity : Activity() {
                 override fun onPageFinished(view: WebView?, url: String?) {
                     if (url?.startsWith("file:///android_asset/nova/") == true) {
                         view?.evaluateJavascript("window.setApps(window.Aura.getApps())", null)
+                        view?.evaluateJavascript("window.setNetwork(${isConnected()})", null)
                     }
                 }
             }
@@ -87,6 +88,12 @@ class AuraNovaActivity : Activity() {
             finish()
         }
     }
+
+    private fun isConnected(): Boolean = try {
+        val manager = getSystemService(android.content.Context.CONNECTIVITY_SERVICE) as android.net.ConnectivityManager
+        val capabilities = manager.getNetworkCapabilities(manager.activeNetwork)
+        capabilities?.hasCapability(android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET) == true
+    } catch (_: Exception) { false }
 
     private fun collectApps() {
         repo.clear()
@@ -169,6 +176,14 @@ class AuraNovaActivity : Activity() {
         }
 
         @JavascriptInterface
+        fun openNetwork() {
+            runOnUiThread {
+                try { startActivity(Intent(android.provider.Settings.ACTION_WIFI_SETTINGS)) }
+                catch (_: Exception) { try { startActivity(Intent(android.provider.Settings.ACTION_SETTINGS)) } catch (_: Exception) {} }
+            }
+        }
+
+        @JavascriptInterface
         fun openSettings() {
             runOnUiThread {
                 try { startActivity(Intent(android.provider.Settings.ACTION_SETTINGS)) }
@@ -204,6 +219,9 @@ class AuraNovaActivity : Activity() {
             val action = when (event.keyCode) {
                 KeyEvent.KEYCODE_DPAD_LEFT -> "left"
                 KeyEvent.KEYCODE_DPAD_RIGHT -> "right"
+                KeyEvent.KEYCODE_DPAD_UP -> "up"
+                KeyEvent.KEYCODE_DPAD_DOWN -> "down"
+                KeyEvent.KEYCODE_BACK -> "back"
                 KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_ENTER,
                 KeyEvent.KEYCODE_NUMPAD_ENTER, KeyEvent.KEYCODE_BUTTON_A -> "enter"
                 else -> null
@@ -219,6 +237,7 @@ class AuraNovaActivity : Activity() {
     override fun onResume() {
         super.onResume()
         browser?.onResume()
+        browser?.evaluateJavascript("if(window.setNetwork)window.setNetwork(${isConnected()})", null)
     }
     override fun onPause() {
         browser?.onPause()
