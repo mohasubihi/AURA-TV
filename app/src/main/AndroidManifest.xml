@@ -16,7 +16,7 @@
         <package android:name="com.netflix.ninja" />
     </queries>
     <application
-        android:label="AURA TV 3"
+        android:label="AURA Lounge"
         android:allowBackup="false"
         android:usesCleartextTraffic="false"
         android:icon="@drawable/tv_banner"
@@ -24,7 +24,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AuraTV">
         <activity
-            android:name="com.auratv.launcher.MainActivity"
+            android:name="com.auratv.launcher.AuraV4Activity"
             android:exported="true"
             android:configChanges="uiMode|screenSize|orientation">
             <intent-filter>
