@@ -129,7 +129,7 @@ class AuraV4Activity : Activity() {
 
     private fun px(value: Int) = (value * sizing).roundToInt().coerceAtLeast(1)
     private fun area(x: Int, y: Int, w: Int, h: Int) =
-        FrameLayout.LayoutParams(px(w), px(h)).apply {
+        FrameLayout.LayoutParams(px(w), px(h), Gravity.TOP or Gravity.LEFT).apply {
             leftMargin = px(x); topMargin = px(y)
         }
 
@@ -166,6 +166,7 @@ class AuraV4Activity : Activity() {
 
     private fun frame(x: Int, y: Int, w: Int, h: Int, tone: Int = 0xEE0D121B.toInt()): FrameLayout =
         FrameLayout(this).also {
+            it.layoutDirection = View.LAYOUT_DIRECTION_LTR
             it.background = rounded(tone, 24, 0x36FFFFFF, 1)
             it.clipToOutline = true
             it.elevation = px(8).toFloat()
@@ -194,8 +195,12 @@ class AuraV4Activity : Activity() {
     }
 
     private fun construct() {
-        val root = FrameLayout(this).apply { setBackgroundColor(0xFF080C13.toInt()) }
+        val root = FrameLayout(this).apply {
+            layoutDirection = View.LAYOUT_DIRECTION_LTR
+            setBackgroundColor(0xFF080C13.toInt())
+        }
         canvas = FrameLayout(this).apply {
+            layoutDirection = View.LAYOUT_DIRECTION_LTR
             clipChildren = false; clipToPadding = false
         }
         root.addView(canvas, FrameLayout.LayoutParams(px(1920), px(1080), Gravity.CENTER))
@@ -204,7 +209,7 @@ class AuraV4Activity : Activity() {
         wallpaper = ImageView(this).apply { scaleType = ImageView.ScaleType.CENTER_CROP }
         put(canvas, wallpaper, 0, 0, 1920, 1080)
         put(canvas, View(this).apply {
-            background = gradient(0x77060A11, 0x2804080D, 0xD9060A10.toInt(), 0xFA060A10.toInt())
+            background = gradient(0xAD060A11.toInt(), 0x78070A10, 0xDA060A10.toInt(), 0xFA060A10.toInt())
         }, 0, 0, 1920, 1080)
         put(canvas, View(this).apply { setBackgroundColor(0x88080B12.toInt()) }, 0, 330, 1920, 750)
 
